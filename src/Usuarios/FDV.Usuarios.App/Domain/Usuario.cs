@@ -12,7 +12,7 @@ public class Usuario : Entity, IAggregateRoot
     public string Foto { get; set; }
     public Login Login { get; set; }
 
-    private List<Endereco> _Enderecos;
+    private HashSet<Endereco> _Enderecos;
     public IReadOnlyCollection<Endereco> Enderecos => _Enderecos;
 
     public int Idade
@@ -35,7 +35,7 @@ public class Usuario : Entity, IAggregateRoot
 
     private Usuario()
     {
-        _Enderecos = new List<Endereco>();
+        _Enderecos = new HashSet<Endereco>();
     }
 
     public Usuario(string nome, Cpf cpf, string foto, DateTime dataDeNascimento) : this()
