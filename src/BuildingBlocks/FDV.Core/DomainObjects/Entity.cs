@@ -1,4 +1,5 @@
 using System.Globalization;
+using FDV.Core.Messages;
 
 namespace FDV.Core.DomainObjects;
 
@@ -10,7 +11,27 @@ public abstract class Entity
 
     public DateTime DataDeAlteracao { get; set; }
 
-    public string ObterDataFormatada() => DataDeCadastro.ToString("G",new CultureInfo("pt-Br"));
+    private List<Event> _notificacoes;
+    public IReadOnlyCollection<Event> Notificacoes => _notificacoes?.AsReadOnly();
+
+
+    public string ObterDataFormatada() => DataDeCadastro.ToString("G", new CultureInfo("pt-Br"));
 
     public void AtribuirEntidadeId(Guid id) => Id = id;
+
+    public void AdicionarEvento(Event evento)
+    {
+        _notificacoes ??= new List<Event>();
+        _notificacoes.Add(evento);
+    }
+
+    public void RemoverEvento(Event eventItem)
+    {
+        _notificacoes?.Remove(eventItem);
+    }
+
+    public void LimparEventos()
+    {
+        _notificacoes?.Clear();
+    }
 }
