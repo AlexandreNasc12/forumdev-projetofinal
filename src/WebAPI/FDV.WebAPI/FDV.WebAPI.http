@@ -1,0 +1,6 @@
+@FDV.WebAPI_HostAddress = http://localhost:5208
+
+GET {{FDV.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
