@@ -1,5 +1,10 @@
 using FDV.Core.Mediator;
+using FDV.Forum.Domain.Interfaces;
+using FDV.Forum.Infra.Data;
+using FDV.Forum.Infra.Repositories;
+using FDV.Usuarios.App.Domain.Interfaces;
 using FDV.Usuarios.App.Infra.Data;
+using FDV.Usuarios.App.Infra.Repositories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +20,12 @@ var configuration = builder.Configuration;
 builder.Services.AddDbContext<UsuarioContext>(options => 
                 options.UseSqlServer(configuration.GetConnectionString("ForumConnection")));
 
+builder.Services.AddDbContext<PostagensContext>(options => 
+                options.UseSqlServer(configuration.GetConnectionString("ForumConnection")));
+
 builder.Services.AddScoped<IMediatorHandler,MediatorHandler>();
+builder.Services.AddScoped<IUsuarioRepository,UsuarioRepository>();
+builder.Services.AddScoped<IPostagemRepository,PostagemRepository>();
 
 builder.Services.AddMediatR(typeof(Program));
 

@@ -5,6 +5,8 @@ namespace FDV.Forum.Domain;
 
 public class Postagem : Entity, IAggregateRoot
 {
+    public const int TamanhoMaximo = 500;
+
     public Usuario Usuario { get; private set; }
 
     public string Titulo { get; private set; }

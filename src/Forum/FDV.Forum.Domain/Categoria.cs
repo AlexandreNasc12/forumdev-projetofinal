@@ -1,13 +1,15 @@
+using FDV.Core.DomainObjects;
+
 namespace FDV.Forum.Domain;
 
-public class Categoria
+public class Categoria : Entity
 {
     public string Nome { get; private set; }
     public string Descricao { get; private set; }
 
     //EF
     public List<Postagem> _Postagens;
-    public IReadOnlyCollection<Postagem> Postagems => _Postagens;
+    public IReadOnlyCollection<Postagem> Postagens => _Postagens;
 
     protected Categoria(){}
 
