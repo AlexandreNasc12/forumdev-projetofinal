@@ -35,11 +35,6 @@ public class PostagemRepository : IPostagemRepository
         _context.Postagens.Update(entity);
     }
 
-    public void Dispose()
-    {
-        _context?.Dispose();
-    }
-
     public async Task<IEnumerable<Postagem>> ObterModeracao()
     {
         return await _context.Postagens
@@ -55,5 +50,10 @@ public class PostagemRepository : IPostagemRepository
     {
         return await _context.Postagens
                 .Where(c => c.Publicado).ToListAsync();
+    }
+
+    public void Dispose()
+    {
+        _context?.Dispose();
     }
 }

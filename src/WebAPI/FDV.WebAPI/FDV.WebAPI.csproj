@@ -22,6 +22,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Usuarios\FDV.Usuarios.App\FDV.Usuarios.App.csproj" />
     <ProjectReference Include="..\..\Forum\FDV.Forum.Infra\FDV.Forum.Infra.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\FDV.Core\FDV.Core.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\FDV.WebApi.Core\FDV.WebApi.Core.csproj" />
   </ItemGroup>
 
 </Project>

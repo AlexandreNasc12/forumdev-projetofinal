@@ -3,6 +3,7 @@ using FDV.Core.Data;
 using FDV.Usuarios.App.Domain;
 using FDV.Usuarios.App.Domain.Interfaces;
 using FDV.Usuarios.App.Infra.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace FDV.Usuarios.App.Infra.Repositories;
 
@@ -37,6 +38,11 @@ public class UsuarioRepository : IUsuarioRepository
     public async Task<Usuario> ObterPorId(Guid Id)
     {
         return await _context.Usuarios.FindAsync(Id);
+    }
+    
+    public async Task<IEnumerable<Usuario>> ObterTodos()
+    {
+        return await _context.Usuarios.OrderBy(c => c.Nome).ToListAsync();
     }
     
     public void Dispose()
