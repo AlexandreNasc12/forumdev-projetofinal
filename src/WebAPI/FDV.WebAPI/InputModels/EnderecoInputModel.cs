@@ -23,3 +23,10 @@ public class EnderecoInputModel
     [Required(ErrorMessage = "Informe um estado!")]
     public string Estado { get; set; }
 }
+
+public class CategoriaInputModel
+{
+    public string Nome { get; set; }
+
+    public string Descricao { get; set; }
+}

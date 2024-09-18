@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Events/" />
+    <Folder Include="Queries/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\FDV.Core\FDV.Core.csproj" />
+    <ProjectReference Include="..\FDV.Forum.Infra\FDV.Forum.Infra.csproj" />
+    <ProjectReference Include="..\FDV.Forum.Domain\FDV.Forum.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

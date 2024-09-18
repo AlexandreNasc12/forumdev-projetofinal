@@ -6,7 +6,6 @@ using FDV.Usuarios.App.Application.Queries;
 using FDV.WebApi.Core.Controllers;
 using FDV.WebAPI.InputModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FDV.WebAPI.Controllers;
 

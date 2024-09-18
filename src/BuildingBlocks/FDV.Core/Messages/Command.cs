@@ -16,4 +16,9 @@ public abstract class Command : Message, IRequest<ValidationResult>
         Timestamp = DateTime.UtcNow;
         ValidationResult = new ValidationResult();
     }
+
+    public virtual bool EstaValido()
+    {
+        return ValidationResult.IsValid;
+    }
 }

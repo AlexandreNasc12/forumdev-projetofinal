@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -24,6 +24,7 @@
     <ProjectReference Include="..\..\Forum\FDV.Forum.Infra\FDV.Forum.Infra.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\FDV.Core\FDV.Core.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\FDV.WebApi.Core\FDV.WebApi.Core.csproj" />
+    <ProjectReference Include="..\..\Forum\FDV.Forum.App\FDV.Forum.App.csproj" />
   </ItemGroup>
 
 </Project>

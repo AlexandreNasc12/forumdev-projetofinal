@@ -52,6 +52,16 @@ public class PostagemRepository : IPostagemRepository
                 .Where(c => c.Publicado).ToListAsync();
     }
 
+    public void Adicionar(Categoria categoria)
+    {
+        _context.Categorias.Add(categoria);
+    }
+
+    public void Atualizar(Categoria categoria)
+    {
+        _context.Categorias.Update(categoria);
+    }
+
     public void Dispose()
     {
         _context?.Dispose();
