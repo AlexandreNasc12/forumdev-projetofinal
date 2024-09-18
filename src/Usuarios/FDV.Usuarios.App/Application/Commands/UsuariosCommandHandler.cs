@@ -8,7 +8,8 @@ using MediatR;
 namespace FDV.Usuarios.App.Application.Commands;
 
 public class UsuariosCommandHandler : CommandHandler,
-        IRequestHandler<AdicionarUsuarioCommand, ValidationResult>, IDisposable
+        IRequestHandler<AdicionarUsuarioCommand, ValidationResult>,
+        IRequestHandler<AdicionarEnderecoCommand,ValidationResult>, IDisposable
 {
 
     private readonly IUsuarioRepository _usuarioRepository;
@@ -38,6 +39,25 @@ public class UsuariosCommandHandler : CommandHandler,
 
         return await PersistirDados(_usuarioRepository.UnitOfWork);
     }
+
+
+    public async Task<ValidationResult> Handle(AdicionarEnderecoCommand request, CancellationToken cancellationToken)
+    {
+        var usuario = await _usuarioRepository.ObterPorId(request.UsuarioId);
+        if (usuario is null)
+        {
+            AdicionarErro("Usuário não encontrado!");
+            return ValidationResult;
+        }
+
+        var endereco = new Endereco(request.Logradouro,request.Numero,request.Complemento, 
+        new Cep(request.Cep),request.Bairro, request.Cidade, request.Estado);
+
+        usuario.Adicionar(endereco);
+
+        return await PersistirDados(_usuarioRepository.UnitOfWork);
+    }
+
 
     public void Dispose()
     {

@@ -7,6 +7,7 @@ namespace FDV.Usuarios.App.Application.ViewModels;
 
 public class UsuarioViewModel
 {
+    public Guid UsuarioId { get; set; }
     public string Nome { get; set; }
     public string Cpf { get; set; }
     public string DataDeNascimento { get; set; }
@@ -16,6 +17,7 @@ public class UsuarioViewModel
     {
         return new UsuarioViewModel()
         {
+            UsuarioId = usuario.Id,
             Nome = usuario.Nome,
             DataDeNascimento = usuario.DataDeNascimento.ToString("G",new CultureInfo("pt-Br")),
             Foto = usuario.Foto,

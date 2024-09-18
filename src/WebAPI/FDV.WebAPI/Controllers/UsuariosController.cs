@@ -6,6 +6,7 @@ using FDV.Usuarios.App.Application.Queries;
 using FDV.WebApi.Core.Controllers;
 using FDV.WebAPI.InputModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FDV.WebAPI.Controllers;
 
@@ -52,4 +53,17 @@ public class UsuariosController : MainController
         return CustomResponse(result);
     }
 
+    [HttpPost("endereco/{Id:Guid}")]
+    public async Task<IActionResult> AdicionarEndereco(Guid Id, EnderecoInputModel model)
+    {
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+        var comando = new AdicionarEnderecoCommand(Id,model.Logradouro,model.Numero,
+        model.Complemento,model.Cep,model.Bairro,
+        model.Cidade,model.Estado);
+
+        var result = await _mediatorHandler.EnviarComando(comando);
+
+        return CustomResponse(result);
+    }
 }

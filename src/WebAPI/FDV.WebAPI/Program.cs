@@ -35,6 +35,7 @@ builder.Services.AddScoped<IPostagemRepository,PostagemRepository>();
 builder.Services.AddScoped<IUsuarioQueries,UsuarioQueries>();
 
 builder.Services.AddScoped<IRequestHandler<AdicionarUsuarioCommand,ValidationResult>,UsuariosCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<AdicionarEnderecoCommand,ValidationResult>,UsuariosCommandHandler>();
 
 builder.Services.Configure<ApiBehaviorOptions>(options => 
 {
