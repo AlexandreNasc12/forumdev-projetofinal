@@ -6,11 +6,11 @@ namespace FDV.Usuarios.App.Domain;
 
 public class Usuario : Entity, IAggregateRoot
 {
-    public string Nome { get; set; }
-    public Cpf Cpf { get; set; }
-    public DateTime DataDeNascimento { get; set; }
-    public string Foto { get; set; }
-    public Login Login { get; set; }
+    public string Nome { get; private set; }
+    public Cpf Cpf { get; private set; }
+    public DateTime DataDeNascimento { get; private set; }
+    public string Foto { get; private set; }
+    public Login Login { get; private set; }
 
     private HashSet<Endereco> _Enderecos;
     public IReadOnlyCollection<Endereco> Enderecos => _Enderecos;
@@ -47,6 +47,8 @@ public class Usuario : Entity, IAggregateRoot
     }
 
     public void AtribuirNome(string nome) => Nome = nome;
+
+    public void AtribuirLogin(Login login) => Login = login;
 
     public void AtribuirDataDeNascimento(DateTime dataNascimento) => DataDeNascimento = dataNascimento;
 

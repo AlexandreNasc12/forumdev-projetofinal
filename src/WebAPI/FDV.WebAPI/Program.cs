@@ -2,10 +2,14 @@ using FDV.Core.Mediator;
 using FDV.Forum.Domain.Interfaces;
 using FDV.Forum.Infra.Data;
 using FDV.Forum.Infra.Repositories;
+using FDV.Usuarios.App.Application.Commands;
+using FDV.Usuarios.App.Application.Queries;
 using FDV.Usuarios.App.Domain.Interfaces;
 using FDV.Usuarios.App.Infra.Data;
 using FDV.Usuarios.App.Infra.Repositories;
+using FluentValidation.Results;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +32,14 @@ builder.Services.AddDbContext<PostagensContext>(options =>
 builder.Services.AddScoped<IMediatorHandler,MediatorHandler>();
 builder.Services.AddScoped<IUsuarioRepository,UsuarioRepository>();
 builder.Services.AddScoped<IPostagemRepository,PostagemRepository>();
+builder.Services.AddScoped<IUsuarioQueries,UsuarioQueries>();
+
+builder.Services.AddScoped<IRequestHandler<AdicionarUsuarioCommand,ValidationResult>,UsuariosCommandHandler>();
+
+builder.Services.Configure<ApiBehaviorOptions>(options => 
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 builder.Services.AddMediatR(typeof(Program));
 

@@ -1,7 +1,10 @@
 using System;
-using FDV.Usuarios.App.Domain.Interfaces;
+using FDV.Core.Mediator;
+using FDV.Core.Ultilities;
+using FDV.Usuarios.App.Application.Commands;
+using FDV.Usuarios.App.Application.Queries;
 using FDV.WebApi.Core.Controllers;
-using FDV.WebAPI.ViewModels;
+using FDV.WebAPI.InputModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FDV.WebAPI.Controllers;
@@ -9,26 +12,44 @@ namespace FDV.WebAPI.Controllers;
 [Route("api/usuario")]
 public class UsuariosController : MainController
 {
-    public readonly IUsuarioRepository _UsuarioRepository;
+    public readonly IUsuarioQueries _usuarioQueries;
 
-    public UsuariosController(IUsuarioRepository usuarioRepository)
+    public readonly IMediatorHandler _mediatorHandler;
+
+    public UsuariosController(IMediatorHandler mediatorHandler, IUsuarioQueries usuarioQueries)
     {
-        _UsuarioRepository = usuarioRepository;
+
+        _mediatorHandler = mediatorHandler;
+        _usuarioQueries = usuarioQueries;
     }
 
     [HttpGet]
     public async Task<IActionResult> ObterTodos()
     {
-        var usuarios = await _UsuarioRepository.ObterTodos();
+        var usuarios = await _usuarioQueries.ObterTodos();
 
-        var usuarioViews = usuarios.Select(UsuarioViewModel.Mapear);
+        return CustomResponse(usuarios);
+    }
 
-        if (!usuarioViews.Any())
+
+    [HttpPost]
+    public async Task<IActionResult> Adicionar(UsuarioInputModel model)
+    {
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+        var dataDeNascimento = model.DataDeNascimento.ConverterParaData();
+
+        if (dataDeNascimento is null)
         {
-            AdicionarErro("Não encontrei usuário na base de dados!");
+            AdicionarErro("Data de nascimento inválida!");
             return CustomResponse();
         }
 
-        return CustomResponse(usuarioViews);
+        var comando = new AdicionarUsuarioCommand(model.Nome, model.Cpf, dataDeNascimento!.Value, model.Foto, model.Email, model.Senha);
+
+        var result = await _mediatorHandler.EnviarComando(comando);
+
+        return CustomResponse(result);
     }
+
 }
