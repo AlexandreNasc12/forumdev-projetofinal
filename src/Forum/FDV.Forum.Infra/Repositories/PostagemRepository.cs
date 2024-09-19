@@ -52,6 +52,11 @@ public class PostagemRepository : IPostagemRepository
                 .Where(c => c.Publicado).ToListAsync();
     }
 
+    public async Task<IEnumerable<Categoria>> ObterCategorias()
+    {
+        return await _context.Categorias.OrderBy(c => c.Nome).ToListAsync();
+    }
+
     public void Adicionar(Categoria categoria)
     {
         _context.Categorias.Add(categoria);
@@ -60,6 +65,11 @@ public class PostagemRepository : IPostagemRepository
     public void Atualizar(Categoria categoria)
     {
         _context.Categorias.Update(categoria);
+    }
+
+    public async Task<Categoria> ObterCategoriaPorId(Guid Id)
+    {
+        return await _context.Categorias.FindAsync(Id);
     }
 
     public void Dispose()

@@ -1,5 +1,6 @@
 using FDV.Core.Mediator;
 using FDV.Forum.App.Commands;
+using FDV.Forum.App.Queries;
 using FDV.Forum.Domain.Interfaces;
 using FDV.Forum.Infra.Data;
 using FDV.Forum.Infra.Repositories;
@@ -35,12 +36,15 @@ builder.Services.AddScoped<IUsuarioRepository,UsuarioRepository>();
 builder.Services.AddScoped<IPostagemRepository,PostagemRepository>();
 builder.Services.AddScoped<IUsuarioQueries,UsuarioQueries>();
 
+builder.Services.AddScoped<ICategoriasQueries,CategoriasQueries>();
+
 //Contexto de Usuários
 builder.Services.AddScoped<IRequestHandler<AdicionarUsuarioCommand,ValidationResult>,UsuariosCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<AdicionarEnderecoCommand,ValidationResult>,UsuariosCommandHandler>();
 
 //Contexto de Postagens
 builder.Services.AddScoped<IRequestHandler<AdicionarCategoriaCommand,ValidationResult>, PostagensCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<AtualizarCategoriaCommand,ValidationResult>, PostagensCommandHandler>();
 
 
 builder.Services.Configure<ApiBehaviorOptions>(options => 

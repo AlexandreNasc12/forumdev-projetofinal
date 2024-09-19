@@ -8,7 +8,8 @@ using MediatR;
 namespace FDV.Forum.App.Commands;
 
 public class PostagensCommandHandler : CommandHandler,
-            IRequestHandler<AdicionarCategoriaCommand, ValidationResult>, IDisposable
+            IRequestHandler<AdicionarCategoriaCommand, ValidationResult>,
+            IRequestHandler<AtualizarCategoriaCommand, ValidationResult>, IDisposable
 {
 
     private readonly IPostagemRepository _postagemRepository;
@@ -25,6 +26,27 @@ public class PostagensCommandHandler : CommandHandler,
         var nova = new Categoria(request.Nome, request.Descricao);
 
         _postagemRepository.Adicionar(nova);
+
+        return await PersistirDados(_postagemRepository.UnitOfWork);
+    }
+
+
+    public async Task<ValidationResult> Handle(AtualizarCategoriaCommand request, CancellationToken cancellationToken)
+    {
+        if (!request.EstaValido()) return request.ValidationResult;
+
+        var categoriaEncontrada = await _postagemRepository.ObterCategoriaPorId(request.CategoriaId);
+
+        if (categoriaEncontrada is null)
+        {
+            AdicionarErro("Categoria não encontrada!");
+            return ValidationResult;
+        }
+
+        categoriaEncontrada.AtribuirNome(request.Nome);
+        categoriaEncontrada.AtribuirDescricao(request.Descricao);
+
+        _postagemRepository.Atualizar(categoriaEncontrada);
 
         return await PersistirDados(_postagemRepository.UnitOfWork);
     }
