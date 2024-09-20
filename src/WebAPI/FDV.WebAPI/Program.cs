@@ -45,6 +45,7 @@ builder.Services.AddScoped<IRequestHandler<AdicionarEnderecoCommand,ValidationRe
 //Contexto de Postagens
 builder.Services.AddScoped<IRequestHandler<AdicionarCategoriaCommand,ValidationResult>, PostagensCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<AtualizarCategoriaCommand,ValidationResult>, PostagensCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<AdicionarPostagemCommand,ValidationResult>, PostagensCommandHandler>();
 
 
 builder.Services.Configure<ApiBehaviorOptions>(options => 

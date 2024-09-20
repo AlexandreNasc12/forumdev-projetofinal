@@ -11,9 +11,13 @@ public interface IPostagemRepository : IRepository<Postagem>, IDisposable
 
     Task<IEnumerable<Categoria>> ObterCategorias();
 
+    Task<IEnumerable<Categoria>> ObterCategorias(Guid[] categoriaIds);
+
     Task<Categoria> ObterCategoriaPorId(Guid Id);
 
+    Task<Categoria> ObterCategoriaPorHash(Guid hash);
+
     void Adicionar(Categoria categoria);
-    
+
     void Atualizar(Categoria categoria);
 }

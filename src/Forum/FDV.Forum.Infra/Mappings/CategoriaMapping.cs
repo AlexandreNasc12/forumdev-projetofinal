@@ -14,6 +14,8 @@ public class CategoriaMapping : IEntityTypeConfiguration<Categoria>
 
         builder.Property(c => c.Descricao).HasMaxLength(Postagem.TamanhoMaximo);
 
+        builder.Property(c => c.Hash).HasMaxLength(50);
+
         builder.HasMany(c => c.Postagens).WithMany(c => c.Categorias);
     }
 }

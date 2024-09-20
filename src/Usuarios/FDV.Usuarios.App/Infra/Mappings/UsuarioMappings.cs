@@ -59,5 +59,6 @@ public class UsuarioMappings : IEntityTypeConfiguration<Usuario>
             endereco.Property(c => c.Complemento).HasMaxLength(500);
         });
 
+        builder.Navigation(c => c.Enderecos).AutoInclude(false);
     }
 }

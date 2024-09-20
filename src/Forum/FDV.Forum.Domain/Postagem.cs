@@ -29,6 +29,18 @@ public class Postagem : Entity, IAggregateRoot
     private List<Comentario> _Comentarios;
     public IReadOnlyCollection<Comentario> Comentarios => _Comentarios;
 
+    protected Postagem()
+    {
+        _Categorias = new List<Categoria>();
+        _Comentarios = new List<Comentario>();
+    }
+
+    public Postagem(Usuario usuario, string titulo, string descricao) : this()
+    {
+        Usuario = usuario;
+        Titulo = titulo;
+        Descricao = descricao;
+    }
 
     public void Adicionar(Comentario comentario)
     {
@@ -42,6 +54,16 @@ public class Postagem : Entity, IAggregateRoot
         _Comentarios.Remove(comentario);
 
         QuantidadeComentario--;
+    }
+
+    public void Adicionar(Categoria categoria)
+    {
+        _Categorias.Add(categoria);
+    }
+
+    public void Remover(Categoria categoria)
+    {
+        _Categorias.Remove(categoria);
     }
 
     public void Publicar() => Publicado = true;

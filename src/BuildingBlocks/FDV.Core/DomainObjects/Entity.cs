@@ -14,6 +14,11 @@ public abstract class Entity
     private List<Event> _notificacoes;
     public IReadOnlyCollection<Event> Notificacoes => _notificacoes?.AsReadOnly();
 
+    public Entity()
+    {
+        DataDeCadastro = DateTime.Now;
+        DataDeAlteracao = DateTime.Now;
+    }
 
     public string ObterDataFormatada() => DataDeCadastro.ToString("G", new CultureInfo("pt-Br"));
 

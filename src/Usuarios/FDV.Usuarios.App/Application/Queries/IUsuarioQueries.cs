@@ -7,6 +7,8 @@ namespace FDV.Usuarios.App.Application.Queries;
 public interface IUsuarioQueries
 {
     Task<IEnumerable<UsuarioViewModel>> ObterTodos();
+
+    Task<UsuarioViewModel> ObterPorId(Guid Id);
 }
 
 
@@ -17,6 +19,13 @@ public class UsuarioQueries : IUsuarioQueries
     public UsuarioQueries(IUsuarioRepository usuarioRepository)
     {
         _usuarioRepository = usuarioRepository;
+    }
+
+    public async Task<UsuarioViewModel> ObterPorId(Guid Id)
+    {
+        var usuario = await _usuarioRepository.ObterPorId(Id);
+
+        return UsuarioViewModel.Mapear(usuario);
     }
 
     public async Task<IEnumerable<UsuarioViewModel>> ObterTodos()

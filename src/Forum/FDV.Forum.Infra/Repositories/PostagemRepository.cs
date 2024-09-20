@@ -72,6 +72,18 @@ public class PostagemRepository : IPostagemRepository
         return await _context.Categorias.FindAsync(Id);
     }
 
+    public async Task<Categoria> ObterCategoriaPorHash(Guid hash)
+    {
+        return await _context.Categorias.FirstOrDefaultAsync(c => c.Hash == hash);
+    }
+
+    public async Task<IEnumerable<Categoria>> ObterCategorias(Guid[] categoriaIds)
+    {
+        return await _context.Categorias
+                            .Where(c => categoriaIds.Contains(c.Id))
+                            .ToListAsync();
+    }
+
     public void Dispose()
     {
         _context?.Dispose();
