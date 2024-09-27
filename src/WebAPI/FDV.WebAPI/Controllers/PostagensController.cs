@@ -1,6 +1,7 @@
 using System;
 using FDV.Core.Mediator;
 using FDV.Forum.App.Commands;
+using FDV.Forum.App.Queries;
 using FDV.Usuarios.App.Application.Queries;
 using FDV.WebApi.Core.Controllers;
 using FDV.WebAPI.InputModels;
@@ -14,14 +15,34 @@ public class PostagensController : MainController
     private readonly IMediatorHandler _mediatorHandler;
 
     private readonly IUsuarioQueries _usuarioQueries;
+    private readonly IPostagensQueries _postagemQueries;
 
-    public PostagensController(IMediatorHandler mediatorHandler,
-    IUsuarioQueries usuarioQueries)
+    public PostagensController(IMediatorHandler mediatorHandler, 
+    IPostagensQueries postagemQueries)
     {
         _mediatorHandler = mediatorHandler;
-        _usuarioQueries = usuarioQueries;
+        _postagemQueries = postagemQueries;
     }
-    
+
+    [HttpGet]
+    public async Task<IActionResult> ObterPublicadas()
+    {
+        var postagens = await _postagemQueries.ObterTodas();
+
+        return CustomResponse(postagens);
+    }
+
+
+    [HttpPatch("{Id:Guid}")]
+    public async Task<IActionResult> Moderacao(Guid Id, ModeracaoInputModel model)
+    {
+        var comando = new ModerarPostagemCommand(model.Publicado,model.Aprovado,Id);
+
+        var result = await _mediatorHandler.EnviarComando(comando);
+
+        return CustomResponse(result);
+    }
+
 
     [HttpPost]
     public async Task<IActionResult> AdicionarPostagem(PostagemInputModel model)

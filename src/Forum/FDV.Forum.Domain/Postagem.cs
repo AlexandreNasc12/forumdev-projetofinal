@@ -23,7 +23,7 @@ public class Postagem : Entity, IAggregateRoot
 
     //EF
 
-    public List<Categoria> _Categorias;
+    private List<Categoria> _Categorias;
     public IReadOnlyCollection<Categoria> Categorias => _Categorias;
 
     private List<Comentario> _Comentarios;

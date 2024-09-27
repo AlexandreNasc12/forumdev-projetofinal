@@ -16,3 +16,9 @@ public class PostagemInputModel
 
     public Guid[] CategoriasId {get; set;}
 }
+
+public class ModeracaoInputModel
+{
+    public bool Publicado { get; set; }
+    public bool Aprovado { get; set; }
+}

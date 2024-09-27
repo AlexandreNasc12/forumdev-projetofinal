@@ -35,6 +35,7 @@ builder.Services.AddScoped<IMediatorHandler,MediatorHandler>();
 builder.Services.AddScoped<IUsuarioRepository,UsuarioRepository>();
 builder.Services.AddScoped<IPostagemRepository,PostagemRepository>();
 builder.Services.AddScoped<IUsuarioQueries,UsuarioQueries>();
+builder.Services.AddScoped<IPostagensQueries,PostagensQueries>();
 
 builder.Services.AddScoped<ICategoriasQueries,CategoriasQueries>();
 
@@ -46,6 +47,7 @@ builder.Services.AddScoped<IRequestHandler<AdicionarEnderecoCommand,ValidationRe
 builder.Services.AddScoped<IRequestHandler<AdicionarCategoriaCommand,ValidationResult>, PostagensCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<AtualizarCategoriaCommand,ValidationResult>, PostagensCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<AdicionarPostagemCommand,ValidationResult>, PostagensCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<ModerarPostagemCommand,ValidationResult>, PostagensCommandHandler>();
 
 
 builder.Services.Configure<ApiBehaviorOptions>(options => 

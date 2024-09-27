@@ -10,7 +10,8 @@ namespace FDV.Forum.App.Commands;
 public class PostagensCommandHandler : CommandHandler,
             IRequestHandler<AdicionarCategoriaCommand, ValidationResult>,
             IRequestHandler<AtualizarCategoriaCommand, ValidationResult>,
-            IRequestHandler<AdicionarPostagemCommand, ValidationResult>, IDisposable
+            IRequestHandler<AdicionarPostagemCommand, ValidationResult>,
+            IRequestHandler<ModerarPostagemCommand, ValidationResult>, IDisposable
 {
 
     private readonly IPostagemRepository _postagemRepository;
@@ -78,7 +79,7 @@ public class PostagensCommandHandler : CommandHandler,
 
         var categorias = await _postagemRepository.ObterCategorias(request.CategoriaIds);
 
-        var postagem = new Postagem(usuario,request.Titulo,request.Descricao);
+        var postagem = new Postagem(usuario, request.Titulo, request.Descricao);
 
         foreach (var categoria in categorias)
         {
@@ -90,8 +91,37 @@ public class PostagensCommandHandler : CommandHandler,
         return await PersistirDados(_postagemRepository.UnitOfWork);
     }
 
+    public async Task<ValidationResult> Handle(ModerarPostagemCommand request, CancellationToken cancellationToken)
+    {
+        if (request.EstaPublicadoNaoAprovado())
+        {
+            AdicionarErro("Não é possível publicar uma postagem não aprovada!");
+            return ValidationResult;
+        }
+
+        var postagem = await _postagemRepository.ObterPorId(request.PostagemId);
+
+        if (postagem is null)
+        {
+            AdicionarErro("Postagem não encontrada!");
+            return ValidationResult;
+        }
+
+        postagem.Ocultar();
+        if (request.Publicado) postagem.Publicar();
+
+        postagem.Reprovar();
+        if (request.Aprovado) postagem.Aprovar();
+
+        _postagemRepository.Atualizar(postagem);
+
+        return await PersistirDados(_postagemRepository.UnitOfWork);
+
+    }
+
     public void Dispose()
     {
         _postagemRepository.Dispose();
     }
+
 }

@@ -43,12 +43,13 @@ public class PostagemRepository : IPostagemRepository
 
     public async Task<Postagem> ObterPorId(Guid Id)
     {
-        return await _context.Postagens.FindAsync(Id);
+        return await _context.Postagens.Include(c => c.Categorias)
+        .FirstOrDefaultAsync(c => c.Id == Id);
     }
 
     public async Task<IEnumerable<Postagem>> ObterPublicadas()
     {
-        return await _context.Postagens
+        return await _context.Postagens.Include(c => c.Categorias)
                 .Where(c => c.Publicado).ToListAsync();
     }
 

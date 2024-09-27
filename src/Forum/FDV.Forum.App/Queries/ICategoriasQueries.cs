@@ -4,7 +4,7 @@ using FDV.Forum.Domain.Interfaces;
 
 namespace FDV.Forum.App.Queries;
 
-public interface ICategoriasQueries
+public interface ICategoriasQueries : IDisposable
 {
     Task<IEnumerable<CategoriaViewModel>> ObterTodas();
 }
@@ -23,5 +23,10 @@ public class CategoriasQueries : ICategoriasQueries
         var categorias = await _postagemRepository.ObterCategorias();
 
         return categorias.Select(CategoriaViewModel.Mapear);
+    }
+
+    public void Dispose()
+    {
+        _postagemRepository.Dispose();
     }
 }
