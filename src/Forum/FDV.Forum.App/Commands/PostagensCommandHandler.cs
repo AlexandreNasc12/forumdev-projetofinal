@@ -11,7 +11,8 @@ public class PostagensCommandHandler : CommandHandler,
             IRequestHandler<AdicionarCategoriaCommand, ValidationResult>,
             IRequestHandler<AtualizarCategoriaCommand, ValidationResult>,
             IRequestHandler<AdicionarPostagemCommand, ValidationResult>,
-            IRequestHandler<ModerarPostagemCommand, ValidationResult>, IDisposable
+            IRequestHandler<ModerarPostagemCommand, ValidationResult>,
+            IRequestHandler<ComentarCommand, ValidationResult>, IDisposable
 {
 
     private readonly IPostagemRepository _postagemRepository;
@@ -119,9 +120,23 @@ public class PostagensCommandHandler : CommandHandler,
 
     }
 
+
+    public async Task<ValidationResult> Handle(ComentarCommand request, CancellationToken cancellationToken)
+    {
+        var postagem = await _postagemRepository.ObterPorId(request.PostagemId);
+
+        var usuario = new Usuario(request.UsuarioId, request.Nome, request.Foto);
+
+        var comentario = new Comentario(usuario, request.Descricao);
+
+        postagem.Adicionar(comentario);
+
+        return await PersistirDados(_postagemRepository.UnitOfWork);
+    }
+
+
     public void Dispose()
     {
         _postagemRepository.Dispose();
     }
-
 }

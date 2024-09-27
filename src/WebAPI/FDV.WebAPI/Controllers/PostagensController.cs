@@ -65,4 +65,18 @@ public class PostagensController : MainController
 
         return CustomResponse(result);
     }
-}
+
+    [HttpPost("comentar")]
+    public async Task<IActionResult> Comentar(ComentarioInputModel model)
+    {
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+        var usuario = await _usuarioQueries.ObterPorId(model.UsuarioId);
+
+        var comando = new ComentarCommand(model.PostagemId,usuario.UsuarioId,usuario.Nome,usuario.Foto,model.Descricao);
+
+        var result = await _mediatorHandler.EnviarComando(comando);
+
+        return CustomResponse(result);
+    }
+}   

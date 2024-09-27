@@ -48,6 +48,7 @@ builder.Services.AddScoped<IRequestHandler<AdicionarCategoriaCommand,ValidationR
 builder.Services.AddScoped<IRequestHandler<AtualizarCategoriaCommand,ValidationResult>, PostagensCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<AdicionarPostagemCommand,ValidationResult>, PostagensCommandHandler>();
 builder.Services.AddScoped<IRequestHandler<ModerarPostagemCommand,ValidationResult>, PostagensCommandHandler>();
+builder.Services.AddScoped<IRequestHandler<ComentarCommand,ValidationResult>, PostagensCommandHandler>();
 
 
 builder.Services.Configure<ApiBehaviorOptions>(options => 
