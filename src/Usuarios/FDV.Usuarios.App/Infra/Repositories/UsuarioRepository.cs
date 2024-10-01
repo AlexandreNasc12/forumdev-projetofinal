@@ -1,4 +1,3 @@
-using System;
 using FDV.Core.Data;
 using FDV.Usuarios.App.Domain;
 using FDV.Usuarios.App.Domain.Interfaces;
@@ -37,7 +36,7 @@ public class UsuarioRepository : IUsuarioRepository
 
     public async Task<Usuario> ObterPorId(Guid Id)
     {
-        return await _context.Usuarios.FindAsync(Id);
+        return await _context.Usuarios.FirstOrDefaultAsync(c => c.Id == Id);
     }
     
     public async Task<IEnumerable<Usuario>> ObterTodos()

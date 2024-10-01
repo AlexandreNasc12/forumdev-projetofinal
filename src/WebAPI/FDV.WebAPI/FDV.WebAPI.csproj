@@ -27,4 +27,10 @@
     <ProjectReference Include="..\..\Forum\FDV.Forum.App\FDV.Forum.App.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+    </Content>
+  </ItemGroup>
+
 </Project>

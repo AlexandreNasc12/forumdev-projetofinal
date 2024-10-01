@@ -18,10 +18,12 @@ public class PostagensController : MainController
     private readonly IPostagensQueries _postagemQueries;
 
     public PostagensController(IMediatorHandler mediatorHandler, 
-    IPostagensQueries postagemQueries)
+    IPostagensQueries postagemQueries, 
+    IUsuarioQueries usuarioQueries)
     {
         _mediatorHandler = mediatorHandler;
         _postagemQueries = postagemQueries;
+        _usuarioQueries = usuarioQueries;
     }
 
     [HttpGet]
