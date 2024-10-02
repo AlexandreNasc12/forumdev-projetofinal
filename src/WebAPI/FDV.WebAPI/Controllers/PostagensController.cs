@@ -17,8 +17,8 @@ public class PostagensController : MainController
     private readonly IUsuarioQueries _usuarioQueries;
     private readonly IPostagensQueries _postagemQueries;
 
-    public PostagensController(IMediatorHandler mediatorHandler, 
-    IPostagensQueries postagemQueries, 
+    public PostagensController(IMediatorHandler mediatorHandler,
+    IPostagensQueries postagemQueries,
     IUsuarioQueries usuarioQueries)
     {
         _mediatorHandler = mediatorHandler;
@@ -34,11 +34,27 @@ public class PostagensController : MainController
         return CustomResponse(postagens);
     }
 
+    [HttpGet("comentarios/{postagemId:Guid}")]
+    public async Task<IActionResult> ObterComentarios(Guid postagemId)
+    {
+        var comentarios = await _postagemQueries.ObterComentarios(postagemId);
+
+        return CustomResponse(comentarios);
+    }
+
+    [HttpGet("moderacao")]
+    public async Task<IActionResult> ListarModeracao()
+    {
+        var postagens = await _postagemQueries.ObterModeracao();
+
+        return CustomResponse(postagens);
+    }
+
 
     [HttpPatch("{Id:Guid}")]
     public async Task<IActionResult> Moderacao(Guid Id, ModeracaoInputModel model)
     {
-        var comando = new ModerarPostagemCommand(model.Publicado,model.Aprovado,Id);
+        var comando = new ModerarPostagemCommand(model.Publicado, model.Aprovado, Id);
 
         var result = await _mediatorHandler.EnviarComando(comando);
 
@@ -75,10 +91,10 @@ public class PostagensController : MainController
 
         var usuario = await _usuarioQueries.ObterPorId(model.UsuarioId);
 
-        var comando = new ComentarCommand(model.PostagemId,usuario.UsuarioId,usuario.Nome,usuario.Foto,model.Descricao);
+        var comando = new ComentarCommand(model.PostagemId, usuario.UsuarioId, usuario.Nome, usuario.Foto, model.Descricao);
 
         var result = await _mediatorHandler.EnviarComando(comando);
 
         return CustomResponse(result);
     }
-}   
+}

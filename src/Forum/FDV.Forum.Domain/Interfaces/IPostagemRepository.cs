@@ -1,4 +1,5 @@
 using System;
+using System.Data.Common;
 using FDV.Core.Data;
 
 namespace FDV.Forum.Domain.Interfaces;
@@ -16,6 +17,8 @@ public interface IPostagemRepository : IRepository<Postagem>, IDisposable
     Task<Categoria> ObterCategoriaPorId(Guid Id);
 
     Task<Categoria> ObterCategoriaPorHash(Guid hash);
+
+    DbConnection ObterConexao();
 
     void Adicionar(Categoria categoria);
 

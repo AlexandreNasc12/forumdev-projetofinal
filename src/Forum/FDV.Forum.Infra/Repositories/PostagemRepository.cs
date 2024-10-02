@@ -1,4 +1,5 @@
 using System;
+using System.Data.Common;
 using FDV.Core.Data;
 using FDV.Forum.Domain;
 using FDV.Forum.Domain.Interfaces;
@@ -37,7 +38,7 @@ public class PostagemRepository : IPostagemRepository
 
     public async Task<IEnumerable<Postagem>> ObterModeracao()
     {
-        return await _context.Postagens
+        return await _context.Postagens.Include(c => c.Categorias)
             .Where(c => !c.Aprovado).ToListAsync();
     }
 
@@ -83,6 +84,11 @@ public class PostagemRepository : IPostagemRepository
         return await _context.Categorias
                             .Where(c => categoriaIds.Contains(c.Id))
                             .ToListAsync();
+    }
+
+    public DbConnection ObterConexao()
+    {
+        return _context.Database.GetDbConnection();
     }
 
     public void Dispose()
