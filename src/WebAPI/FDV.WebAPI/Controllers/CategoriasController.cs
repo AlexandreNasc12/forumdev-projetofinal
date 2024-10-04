@@ -21,6 +21,10 @@ public class CategoriasController : MainController
         _categoriasQueries = categoriasQueries;
     }
 
+    /// <summary>
+    /// Obter todas as categorias existentes em nossa base de dados
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> ObterTodas()
     {
@@ -29,7 +33,11 @@ public class CategoriasController : MainController
         return CustomResponse(categorias);
     }
 
-
+    /// <summary>
+    /// Adicione um nova categoria para utilização em novas postagens
+    /// </summary>
+    /// <param name="model">O nome de uma categoria deve conter no máximo 50 caracteres, sua descrição no máximo 5000 caracteres</param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> Adicionar(CategoriaInputModel model)
     {
