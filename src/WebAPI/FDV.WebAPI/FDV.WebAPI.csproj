@@ -13,18 +13,24 @@
 
   <ItemGroup>
      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.8" />
+     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
+     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.8" />
 
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Autenticacao\FDV.Identidade.App\FDV.Identidade.App.csproj" />
     <ProjectReference Include="..\..\Usuarios\FDV.Usuarios.App\FDV.Usuarios.App.csproj" />
     <ProjectReference Include="..\..\Forum\FDV.Forum.Infra\FDV.Forum.Infra.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\FDV.Core\FDV.Core.csproj" />

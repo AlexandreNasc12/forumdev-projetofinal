@@ -14,6 +14,8 @@ builder.Services.AddSwaggerConfiguration();
 
 builder.Services.AddApiConfiguration(configuration);
 
+builder.Services.AddIdentityConfiguration(configuration);
+
 builder.Services.RegisterServices();
 
 builder.Services.AddMediatR(typeof(Program));
