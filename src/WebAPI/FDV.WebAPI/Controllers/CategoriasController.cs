@@ -4,6 +4,7 @@ using FDV.Forum.App.Commands;
 using FDV.Forum.App.Queries;
 using FDV.WebApi.Core.Controllers;
 using FDV.WebAPI.InputModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FDV.WebAPI.Controllers;

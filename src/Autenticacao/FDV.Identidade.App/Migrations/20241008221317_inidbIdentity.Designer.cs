@@ -4,16 +4,19 @@ using FDV.Identidade.App.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace FDV.Identidade.App.Migrations
 {
-    [DbContext(typeof(AutenticacaoDBContext))]
-    partial class AutenticacaoDBContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(AutenticacaoDbContext))]
+    [Migration("20241008221317_inidbIdentity")]
+    partial class inidbIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
