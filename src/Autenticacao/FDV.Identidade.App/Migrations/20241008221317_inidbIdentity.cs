@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FDV.Identidade.App.Migrations
 {
     /// <inheritdoc />
-    public partial class initdbidentity : Migration
+    public partial class inidbIdentity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

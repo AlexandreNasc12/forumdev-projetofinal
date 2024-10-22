@@ -1,4 +1,3 @@
-using System;
 using FDV.Identidade.App.Data;
 using FDV.Identidade.App.Extensions;
 using FDV.WebApi.Core.Identidade;
@@ -9,14 +8,16 @@ namespace FDV.WebAPI.Configuration;
 
 public static class IdentityConfig
 {
-    public static void AddIdentityConfiguration(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services,
+        IConfiguration configuration)
     {
-        services.AddDbContext<AutenticacaoDBContext>(options => options.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
+        services.AddDbContext<AutenticacaoDbContext>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("IdentityConnection")));
 
         services.AddDefaultIdentity<IdentityUser>()
             .AddRoles<IdentityRole>()
             .AddErrorDescriber<IdentityMensagensPortugues>()
-            .AddEntityFrameworkStores<AutenticacaoDBContext>()
+            .AddEntityFrameworkStores<AutenticacaoDbContext>()
             .AddDefaultTokenProviders();
 
         services.Configure<IdentityOptions>(options =>
@@ -29,5 +30,7 @@ public static class IdentityConfig
         });
 
         services.AddJwtConfiguration(configuration);
+        
+        return services;
     }
 }

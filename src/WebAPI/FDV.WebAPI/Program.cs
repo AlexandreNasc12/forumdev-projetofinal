@@ -12,9 +12,9 @@ var configuration = builder.Configuration;
 
 builder.Services.AddSwaggerConfiguration();
 
-builder.Services.AddIdentityConfiguration(configuration);
-
 builder.Services.AddApiConfiguration(configuration);
+
+builder.Services.AddIdentityConfiguration(configuration);
 
 builder.Services.RegisterServices();
 

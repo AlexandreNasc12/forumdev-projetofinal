@@ -5,6 +5,7 @@ using FDV.Forum.App.Queries;
 using FDV.Usuarios.App.Application.Queries;
 using FDV.WebApi.Core.Controllers;
 using FDV.WebAPI.InputModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FDV.WebAPI.Controllers;
@@ -42,6 +43,7 @@ public class PostagensController : MainController
         return CustomResponse(comentarios);
     }
 
+    [Authorize]
     [HttpGet("moderacao")]
     public async Task<IActionResult> ListarModeracao()
     {
@@ -51,6 +53,7 @@ public class PostagensController : MainController
     }
 
 
+    [Authorize]
     [HttpPatch("{Id:Guid}")]
     public async Task<IActionResult> Moderacao(Guid Id, ModeracaoInputModel model)
     {

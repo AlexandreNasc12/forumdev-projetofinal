@@ -1,6 +1,7 @@
 using System;
 using FDV.Forum.Infra.Data;
 using FDV.Usuarios.App.Infra.Data;
+using FDV.WebApi.Core.Identidade;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -56,7 +57,7 @@ public static class ApiConfig
         }
 
         app.MapControllers();
-        
+        app.UseAuthConfiguration();
         app.UseHttpsRedirection();
     }
 }

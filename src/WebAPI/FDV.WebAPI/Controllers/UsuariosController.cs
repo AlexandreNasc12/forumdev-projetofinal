@@ -1,10 +1,10 @@
-using System;
 using FDV.Core.Mediator;
 using FDV.Core.Ultilities;
 using FDV.Usuarios.App.Application.Commands;
 using FDV.Usuarios.App.Application.Queries;
 using FDV.WebApi.Core.Controllers;
 using FDV.WebAPI.InputModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FDV.WebAPI.Controllers;
@@ -16,11 +16,16 @@ public class UsuariosController : MainController
 
     public readonly IMediatorHandler _mediatorHandler;
 
-    public UsuariosController(IMediatorHandler mediatorHandler, IUsuarioQueries usuarioQueries)
+    private readonly UserManager<IdentityUser> _userManager;
+
+    public UsuariosController(IMediatorHandler mediatorHandler, 
+    IUsuarioQueries usuarioQueries, 
+    UserManager<IdentityUser> userManager)
     {
 
         _mediatorHandler = mediatorHandler;
         _usuarioQueries = usuarioQueries;
+        _userManager = userManager;
     }
 
     [HttpGet]
@@ -45,6 +50,25 @@ public class UsuariosController : MainController
             return CustomResponse();
         }
 
+        var user = new IdentityUser()
+        {
+            Id = Guid.NewGuid().ToString(),
+            UserName = model.Email,
+            NormalizedUserName = model.Email.ToUpper(),
+            Email = model.Email,
+            NormalizedEmail = model.Email.ToUpper(),
+            EmailConfirmed = true
+        };
+
+        var identidadeCriada = await _userManager.CreateAsync(user, model.Senha);
+
+        if (!identidadeCriada.Succeeded)
+        {
+            foreach (var erro in identidadeCriada.Errors) AdicionarErro(erro.Description);
+
+            return CustomResponse();
+        }
+
         var comando = new AdicionarUsuarioCommand(model.Nome, model.Cpf, dataDeNascimento!.Value, model.Foto, model.Email, model.Senha);
 
         var result = await _mediatorHandler.EnviarComando(comando);
@@ -57,9 +81,9 @@ public class UsuariosController : MainController
     {
         if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-        var comando = new AdicionarEnderecoCommand(Id,model.Logradouro,model.Numero,
-        model.Complemento,model.Cep,model.Bairro,
-        model.Cidade,model.Estado);
+        var comando = new AdicionarEnderecoCommand(Id, model.Logradouro, model.Numero,
+        model.Complemento, model.Cep, model.Bairro,
+        model.Cidade, model.Estado);
 
         var result = await _mediatorHandler.EnviarComando(comando);
 
