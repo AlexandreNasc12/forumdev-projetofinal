@@ -17,12 +17,12 @@ public class AutenticacaoController : MainController
 {
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly UserManager<IdentityUser> _userManager;
-    
+
     private readonly AppSettings _apiSetting;
 
     public AutenticacaoController(
-        SignInManager<IdentityUser> signInManager, 
-        UserManager<IdentityUser> userManager, 
+        SignInManager<IdentityUser> signInManager,
+        UserManager<IdentityUser> userManager,
         IOptions<AppSettings> apiSetting)
     {
         _signInManager = signInManager;
@@ -48,26 +48,27 @@ public class AutenticacaoController : MainController
 
         return CustomResponse(userLogin);
     }
-    
+
+
     private async Task<UsuarioRespostaLogin> GerarJwt(string login)
     {
         var user = await _userManager.FindByNameAsync(login);
-            
+
         var claims = await _userManager.GetClaimsAsync(user);
 
         var identityClaims = await ObterClaimsUsuario(claims, user);
-            
+
         var encodedToken = CodificarToken(identityClaims);
 
         return ObterRespostaToken(encodedToken, user, claims);
     }
-    
+
     private async Task<ClaimsIdentity> ObterClaimsUsuario(ICollection<Claim> claims, IdentityUser user)
     {
         var userRoles = await _userManager.GetRolesAsync(user);
 
         claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
-        claims.Add(new Claim(JwtRegisteredClaimNames.Email,user.Email));
+        claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
         claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
         claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
         claims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(),
@@ -82,7 +83,7 @@ public class AutenticacaoController : MainController
 
         return identityClaims;
     }
-    
+
     private string CodificarToken(ClaimsIdentity identityClaims)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
