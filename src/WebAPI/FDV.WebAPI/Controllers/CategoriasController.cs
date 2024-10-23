@@ -27,6 +27,7 @@ public class CategoriasController : MainController
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> ObterTodas()
     {
         var categorias = await _categoriasQueries.ObterTodas();

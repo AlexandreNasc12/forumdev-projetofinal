@@ -18,8 +18,8 @@ public class UsuariosController : MainController
 
     private readonly UserManager<IdentityUser> _userManager;
 
-    public UsuariosController(IMediatorHandler mediatorHandler, 
-    IUsuarioQueries usuarioQueries, 
+    public UsuariosController(IMediatorHandler mediatorHandler,
+    IUsuarioQueries usuarioQueries,
     UserManager<IdentityUser> userManager)
     {
 
@@ -74,6 +74,27 @@ public class UsuariosController : MainController
         var result = await _mediatorHandler.EnviarComando(comando);
 
         return CustomResponse(result);
+    }
+
+    [HttpPut("{Id:Guid}")]
+    public async Task<IActionResult> Atualizar(Guid Id, AtualizarUsuarioInputModel model)
+    {
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+        var dataDeNascimento = model.DataDeNascimento.ConverterParaData();
+
+        if (dataDeNascimento is null)
+        {
+            AdicionarErro("Data de nascimento inválida!");
+            return CustomResponse();
+        }
+
+        var comando = new AtualizarUsuarioCommand(Id,model.Nome, model.Cpf, dataDeNascimento!.Value, model.Foto);
+
+        var result = await _mediatorHandler.EnviarComando(comando);
+
+        return CustomResponse(result);
+
     }
 
     [HttpPost("endereco/{Id:Guid}")]
