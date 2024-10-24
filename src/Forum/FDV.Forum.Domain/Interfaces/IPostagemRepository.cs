@@ -23,4 +23,6 @@ public interface IPostagemRepository : IRepository<Postagem>, IDisposable
     void Adicionar(Categoria categoria);
 
     void Atualizar(Categoria categoria);
+
+    void Atualizar(Usuario usuario);
 }
