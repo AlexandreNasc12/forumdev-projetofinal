@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Events/" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\BuildingBlocks\FDV.Core\FDV.Core.csproj" />
     <ProjectReference Include="..\FDV.Forum.Infra\FDV.Forum.Infra.csproj" />
     <ProjectReference Include="..\FDV.Forum.Domain\FDV.Forum.Domain.csproj" />

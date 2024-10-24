@@ -1,6 +1,8 @@
 using System;
 using FDV.Core.Mediator;
+using FDV.Core.Messages;
 using FDV.Forum.App.Commands;
+using FDV.Forum.App.Events;
 using FDV.Forum.App.Queries;
 using FDV.Forum.Domain.Interfaces;
 using FDV.Forum.Infra.Repositories;
@@ -27,6 +29,9 @@ public static class DependencyInjectionConfig
         //Contexto de Usuários
         services.AddScoped<IRequestHandler<AdicionarUsuarioCommand, ValidationResult>, UsuariosCommandHandler>();
         services.AddScoped<IRequestHandler<AdicionarEnderecoCommand, ValidationResult>, UsuariosCommandHandler>();
+        services.AddScoped<IRequestHandler<AtualizarUsuarioCommand, ValidationResult>, UsuariosCommandHandler>();
+
+        services.AddScoped<INotificationHandler<UsuarioAtualizadoEvent>,UsuarioAtualizadoEventHandler>();
 
         //Contexto de Postagens
         services.AddScoped<IRequestHandler<AdicionarCategoriaCommand, ValidationResult>, PostagensCommandHandler>();
