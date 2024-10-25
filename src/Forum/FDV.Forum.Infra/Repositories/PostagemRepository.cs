@@ -1,4 +1,3 @@
-using System;
 using System.Data.Common;
 using FDV.Core.Data;
 using FDV.Forum.Domain;
@@ -67,6 +66,15 @@ public class PostagemRepository : IPostagemRepository
     public void Atualizar(Categoria categoria)
     {
         _context.Categorias.Update(categoria);
+    }
+
+    public void Atualizar(Usuario usuario)
+    {
+        _context.Postagens
+            .Where(c => c.Usuario.Id == usuario.Id)
+            .ExecuteUpdate(set => set
+                .SetProperty(c => c.Usuario.Nome, usuario.Nome)
+                .SetProperty(c => c.Usuario.Foto, usuario.Foto));
     }
 
     public async Task<Categoria> ObterCategoriaPorId(Guid Id)
