@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
    <PropertyGroup>
@@ -41,6 +42,9 @@
   <ItemGroup>
     <Content Update="appsettings.Development.json">
       <DependentUpon>appsettings.json</DependentUpon>
+    </Content>
+    <Content Include="..\..\..\.dockerignore">
+      <Link>.dockerignore</Link>
     </Content>
   </ItemGroup>
 

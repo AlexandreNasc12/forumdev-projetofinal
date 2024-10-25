@@ -1,0 +1,13 @@
+services:
+    api-fdvweb:
+        image: api-fdvweb:1.0.0
+        container_name: api-fdvweb
+        build:
+            context: ../src
+            dockerfile: ./WebAPI/FDV.WebAPI/Dockerfile
+        restart: always
+        ports:
+            - "8081:8081"
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://+:8081;http://+8081
